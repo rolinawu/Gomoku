@@ -38,6 +38,11 @@ class Calc(object):
 		#self.Ocells += 2**cell
 
 	def cellexist(self, cell):
+		'''
+		'''
+		print ((cell in self.Xcells) or (cell in self.Ocells))
+		'''
+		'''
 		return ((cell in self.Xcells) or (cell in self.Ocells))
 
 	def sumofXcells(self):

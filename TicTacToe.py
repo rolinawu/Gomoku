@@ -7,17 +7,16 @@ import tkMessageBox
 
 
 def main():
-	loopc = 1
+	loopc = 1 #loop count
 	view = Display()
 	control = Control()
 	model = Calc()
-	script
 	GOb = GraphWin("TicTacToe", view.getWinWid(), view.getWinHei())
-	#control.GameStart(GOb)
+	control.GameStart(GOb)
 	#### for testing use only ####
+	'''
 	for i in range(226):
 		view.DrawPlayer(GOb, i, str(i), color_rgb(200,200,200))
-
 	crosses = [110, 125, 112, 129, 140]
 	noughts = [95, 126, 142, 143, 113]
 
@@ -28,11 +27,8 @@ def main():
 			view.DrawPlayer(GOb, x, 'X')
 	for o in noughts:
 			view.DrawPlayer(GOb, o, 'O')
-
+	'''
 	#### for testing use only ####
-	view.board(GOb)
-	view.createbutton(GOb, view.anapos, 'Analyze')
-	view.createbutton(GOb, view.exitpos,'Quit')
 	while control.gamestat == False: 
 		mpos = GOb.getMouse()
 		mstate = control.CheckMousePos(mpos)
@@ -41,10 +37,13 @@ def main():
 			mstate = control.CheckMousePos(mpos) 
 		# call function that calculates the next best move
 		####control.State(GOb)
-		loopc += 1
 		if mstate == 'Exit':
-			GOb.close()
 			break
+		elif mstate == 'Reset':
+			GOb.close()
+			GOb = GraphWin("TicTacToe", view.getWinWid(), view.getWinHei())
+			control.GameStart(GOb)
+			model.__init__()
 		elif mstate == False:
 			print 'you are off the grid'
 			#return 
@@ -62,12 +61,15 @@ def main():
 			#mstate gives the cell #
 			model.addXcells(mstate)
 			view.DrawPlayer(GOb, mstate, 'X')
+			loopc += 1
 		else:
 			model.addOcells(mstate)
 			view.DrawPlayer(GOb, mstate, 'O')
+			loopc += 1
 			#add the cell to the number that keeps track of all O cells
 			#the cell will be drawn next time we call Control.State()
-
+	if control.gamestat == True :
+		tkMessageBox.showinfo(title="Congrats", message= 'You won!')
 	GOb.close() #only gets to here when game ended
 
 

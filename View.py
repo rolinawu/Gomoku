@@ -14,7 +14,8 @@ class Display():
 		#coordinate of exit button
 		self.bdis = 20 #the distance between each buttons
 		self.exitpos = Point(self.width - self.buttonwid - self.bdis, self.height - 2 * self.buttonhei)	
-		self.anapos = Point(self.exitpos.getX() - self.buttonwid - self.bdis, self.exitpos.getY())	
+		self.resetpos = Point(self.exitpos.getX() - self.buttonwid - self.bdis, self.exitpos.getY())	
+		self.anapos = Point(self.exitpos.getX() - 2*self.buttonwid - 2*self.bdis, self.exitpos.getY())	
 
 	def board(self, GOb):
 		''' 

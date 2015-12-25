@@ -10,6 +10,7 @@ import Game.Model
 import sys
 from View import *
 from Model import *
+import TicTacToe
 
 class Control(object):
 
@@ -18,9 +19,14 @@ class Control(object):
 		self.view = Display()
 		self.model = Calc()
 
+
 	def GameStart(self, GOb):
 		self.view.board(GOb)
-		self.view.DrawPlayer(GOb, 113)
+		self.view.createbutton(GOb, self.view.resetpos, 'Reset')
+		self.view.createbutton(GOb, self.view.anapos, 'Analyze')
+		self.view.createbutton(GOb, self.view.exitpos,'Quit')
+
+
 		'''
 		drawPlayer(GOb, 1)
 		drawPlayer(GOb, 3, 'O')
@@ -28,7 +34,6 @@ class Control(object):
 		drawPlayer(GOb, 15, 'X')
 		drawPlayer(GOb, 225, 'O')
 		'''
-		self.view.createbutton(GOb)
 	'''
 	def State(self, GOb):
 		self.view.board(GOb)
@@ -64,6 +69,12 @@ class Control(object):
 			top_bound = self.view.anapos.getY(),
 			bottom_bound = self.view.anapos.getY()+self.view.buttonhei):
 			return 'Analyze'
+		if self.check_within_bounds(x = mpos.getX(), y = mpos.getY(), 
+			left_bound = self.view.resetpos.getX(), 
+			right_bound = self.view.resetpos.getX() + self.view.buttonwid,
+			top_bound = self.view.resetpos.getY(),
+			bottom_bound = self.view.resetpos.getY()+self.view.buttonhei):
+			return 'Reset'
 		if self.check_within_bounds(x = mpos.getX(), y = mpos.getY(),
 			left_bound = self.view.gridtopleftpt.getX(),
 			right_bound = self.view.gridbutrightpt.getX(),
