@@ -206,14 +206,15 @@ def checkline(line, sp, fp):
         return False
     fp = fp + 2**line[0][0]
     for i in range(225):
-        opThreat = checkThreatfour(2**i, sp, fp)
-        if opThreat[1] == 5:
-            return False
-        elif opThreat[1] > myThreat[1]:
-            bob = checkline(line, fp + opThreat[0] - 2**line[0][0], sp + 2**i)
-            if bob != True:
-                return True
-    return checkline(line[1:], fp, sp + myThreat[0])
+        if (fp + sp) & 2**i == 0:
+            opThreat = checkThreatfour(2**i, sp, fp)
+            if opThreat[1] == 5:
+                return False
+            elif opThreat[1] > myThreat[1]:
+                bob = checkline(line, sp + 2**i, fp + opThreat[0] - 2**line[0][0])
+                if bob == False:
+                    return False
+    return checkline(line[1:], sp + myThreat[0], fp)
 
 '''
 takes in a bit with all the moves of the first player, a bit with all the moves of the second player,
@@ -228,13 +229,14 @@ def ThreatSearch(first, second, depth, acc, moves):
             threat = checkThreat(move, first, second)
             if threat[0] == 0:
                 jj = checkline(acc, crosses, noughts)
+                #print map(lambda x: [x[0]], acc)
                 if jj:
                    winsList = winsList + [map(lambda x: x[0], acc) + [i]]
-        
             elif threat[0] > 0:
                 ac2 = acc + [[i, threat, first, second]]
                 nextMoves = dhashGraph[i]
                 ThreatSearch(first + move, second + threat[0], depth + 1, ac2, nextMoves)
+
 #Takes in a position, returns a list of threats
 
 #print dhashGraph
@@ -244,7 +246,8 @@ def ThreatSearch(first, second, depth, acc, moves):
 #print crosses
 #ThreatSearch(noughts, crosses, 0, [], range(225))
 #print winsList
-#print checkThreat(2**111, noughts, crosses)
+#print checkline([[42], [43]], crosses, noughts)
+#print checkThreat(2**43, noughts, crosses)
 #print xhashGraph[2**111]
 #print bdiagl(79)
 

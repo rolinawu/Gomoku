@@ -44,15 +44,18 @@ def main():
 			GOb = GraphWin("TicTacToe", view.getWinWid(), view.getWinHei())
 			control.GameStart(GOb)
 			model.__init__()
+			script.winsList = []
 		elif mstate == False:
 			print 'you are off the grid'
 			#return 
 		elif mstate == 'Analyze':
 			#print model.sumofXcells()
 			#print sum(map(lambda x: 2**x,[110, 125, 112, 129, 140]))
+			script.winsList = []
 			script.ThreatSearch(model.sumofOcells(), model.sumofXcells(), 0, [], range(225))
 			#print script.winsList
 			winsoln = []
+			print winsoln
 			for i in script.winsList:
 				winsoln.append(str(i))
 			tkMessageBox.showinfo(title="All solutions", message= str('\n'.join(winsoln)))
